@@ -9,25 +9,28 @@ function App() {
 const [dieValue, setDieValue] = useState(allNewDice());
 
 function allNewDice(){
- 
  let values=[]
 
   for(let i=0; i<10; i++){
-    values.push(Math.ceil(Math.random()*6))
+    values.push({
+      value: Math.ceil(Math.random()*6),
+      isHeld : false
+    })
   }
-
   return values
 }
-
 // map through dieValue (array of nums generated in allNewDice) and sets the vale of Dice to that number.
 let diceNum = dieValue.map(num =>
-  
   <Dice 
+    value= {num.value}
     
-    value= {num}
   />
 )
 
+//function that calls allNewDice and changes state to the new dice
+function rollDice (){
+  setDieValue(allNewDice())
+}
   
 
 
@@ -39,7 +42,7 @@ let diceNum = dieValue.map(num =>
           since there is only ten numebrs it will render 10x */}
           {diceNum}
         </div>
-        <button className='roll-btn'>Roll</button>
+        <button className='roll-btn' onClick={rollDice}>Roll</button>
       </div>
     </div>
   );
