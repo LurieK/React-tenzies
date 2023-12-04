@@ -1,10 +1,10 @@
 
-function Dice () {
+function Dice (props) {
 
 
 return (
     <div className='die'>
-        1
+        <h2 className="die-num">{props.value}</h2>
     </div>
 
     )

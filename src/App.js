@@ -1,29 +1,25 @@
 import logo from './logo.svg';
-import './App.css';
-import Dice from './dice'
+import './styling/App.css';
+import Dice from './componets/dice'
 
 function App() {
   return (
-   
     <div className="App">
       <div className="inner-box">
         <div className="dice-container">
-          <Dice/>
-          <Dice/>
-          <Dice/>
-          <Dice/>
-          <Dice/>
-          <Dice/>
-          <Dice/>
-          <Dice/>
-          <Dice/>
-          <Dice/>
-        
+          <Dice value="1" />
+          <Dice value="1" />
+          <Dice value="1" />
+          <Dice value="1" />
+          <Dice value="1" />
+          <Dice value="1" />
+          <Dice value="1" />
+          <Dice value="1" />
+          <Dice value="1" />
+          <Dice value="1" />
         </div>
-      
       </div>
     </div>
-  
   );
 }
 
