@@ -2,11 +2,14 @@ import logo from './logo.svg';
 import './styling/App.css';
 import Dice from './componets/dice'
 import React, {useState, useEffect} from 'react'
+import {nanoid} from "nanoid"
 
 function App() {
 
 //state that sets the array generated in allNewDice to state of dieValue
 const [dieValue, setDieValue] = useState(allNewDice());
+
+console.log(`dieValue is ${dieValue}`)
 
 function allNewDice(){
  let values=[]
@@ -14,15 +17,18 @@ function allNewDice(){
   for(let i=0; i<10; i++){
     values.push({
       value: Math.ceil(Math.random()*6),
-      isHeld : false
+      isHeld : true,
+      id: nanoid()
     })
   }
   return values
 }
 // map through dieValue (array of nums generated in allNewDice) and sets the vale of Dice to that number.
-let diceNum = dieValue.map(num =>
+let diceNum = dieValue.map(die =>
   <Dice 
-    value= {num.value}
+    value= {die.value}
+    held= {die.isHeld}
+    key= {die.id}
     
   />
 )
