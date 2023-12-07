@@ -38,7 +38,20 @@ function rollDice (){
 }
 
 function holdDice(id){
-  console.log(id)
+  setDieValue((prevDieValue)=>{
+
+    return prevDieValue.map((die) => {
+
+      if (die.id === id){
+       return {
+       ...die,
+        isHeld : !die.isHeld
+        }
+      }else{
+       return die
+      }
+    });
+  });
 }
 
 
