@@ -9,15 +9,13 @@ function App() {
 //state that sets the array generated in allNewDice to state of dieValue
 const [dieValue, setDieValue] = useState(allNewDice());
 
-console.log(`dieValue is ${dieValue}`)
-
 function allNewDice(){
  let values=[]
 
   for(let i=0; i<10; i++){
     values.push({
       value: Math.ceil(Math.random()*6),
-      isHeld : true,
+      isHeld : false,
       id: nanoid()
     })
   }
@@ -29,6 +27,7 @@ let diceNum = dieValue.map(die =>
     value= {die.value}
     held= {die.isHeld}
     key= {die.id}
+    holdDice = {() => holdDice(die.id)}
     
   />
 )
@@ -37,7 +36,10 @@ let diceNum = dieValue.map(die =>
 function rollDice (){
   setDieValue(allNewDice())
 }
-  
+
+function holdDice(id){
+  console.log(id)
+}
 
 
   return (
