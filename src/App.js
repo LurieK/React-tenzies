@@ -8,6 +8,7 @@ function App() {
 
 //state that sets the array generated in allNewDice to state of dieValue
 const [dieValue, setDieValue] = useState(allNewDice());
+const [tenzies, setTenzies] = useState(false)
 
 function generateNewDie(){
   return {
