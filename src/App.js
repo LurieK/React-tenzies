@@ -9,18 +9,24 @@ function App() {
 //state that sets the array generated in allNewDice to state of dieValue
 const [dieValue, setDieValue] = useState(allNewDice());
 
-function allNewDice(){
- let values=[]
-
-  for(let i=0; i<10; i++){
-    values.push({
+function generateNewDie(){
+  return {
       value: Math.ceil(Math.random()*6),
       isHeld : false,
       id: nanoid()
-    })
+    }
+
+}
+
+function allNewDice(){
+ let values=[]
+  for(let i=0; i<10; i++){
+    values.push(generateNewDie())
   }
   return values
 }
+
+
 // map through dieValue (array of nums generated in allNewDice) and sets the vale of Dice to that number.
 let diceNum = dieValue.map(die =>
   <Dice 
@@ -34,7 +40,14 @@ let diceNum = dieValue.map(die =>
 
 //function that calls allNewDice and changes state to the new dice
 function rollDice (){
-  setDieValue(allNewDice())
+  setDieValue( prevDieValue =>
+     prevDieValue.map((die) => {
+      return die.isHeld? die : generateNewDie()
+      
+      }
+    )
+  
+  )
 }
 
 function holdDice(id){
@@ -58,6 +71,8 @@ function holdDice(id){
   return (
     <div className="App">
       <div className="inner-box">
+      <h1 className="title">Tenzies</h1>
+            <p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
         <div className="dice-container">
           {/* calles diceNum to get a dice component and render it.
           since there is only ten numebrs it will render 10x */}
