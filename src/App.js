@@ -3,13 +3,25 @@ import './styling/App.css';
 import Dice from './componets/dice'
 import React, {useState, useEffect} from 'react'
 import {nanoid} from "nanoid"
+import Confetti from 'react-confetti'
 
 function App() {
 
 //state that sets the array generated in allNewDice to state of dieValue
 const [dieValue, setDieValue] = useState(allNewDice());
-const [tenzies, setTenzies] = useState(false)
+const [tenzies, setTenzies] = useState(false);
 
+
+  useEffect(() => {
+     const allHeld = dieValue.every(die => die.isHeld)
+     const allEqual = dieValue.every(die => die.Value === dieValue[0].Value)
+
+     if (allHeld && allEqual){
+      setTenzies(true)
+     }
+    },[dieValue]);
+
+//generate a random object with value, isHeld, and an id
 function generateNewDie(){
   return {
       value: Math.ceil(Math.random()*6),
@@ -19,6 +31,7 @@ function generateNewDie(){
 
 }
 
+//take random object from generateNewDie and push it to values 10x
 function allNewDice(){
  let values=[]
   for(let i=0; i<10; i++){
@@ -39,10 +52,11 @@ let diceNum = dieValue.map(die =>
   />
 )
 
-//function that calls allNewDice and changes state to the new dice
+//function that calls called generateNewDice and set's unheld die new values to state
 function rollDice (){
   setDieValue( prevDieValue =>
      prevDieValue.map((die) => {
+  
       return die.isHeld? die : generateNewDie()
       
       }
@@ -51,6 +65,7 @@ function rollDice (){
   )
 }
 
+//map through dieValue and check if die.id matches that die, if yes switch it's value to the opposite
 function holdDice(id){
   setDieValue((prevDieValue)=>{
 
@@ -72,6 +87,7 @@ function holdDice(id){
   return (
     <div className="App">
       <div className="inner-box">
+      {tenzies ? <Confetti/>: ' '}
       <h1 className="title">Tenzies</h1>
             <p className="instructions">Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
         <div className="dice-container">
@@ -79,7 +95,7 @@ function holdDice(id){
           since there is only ten numebrs it will render 10x */}
           {diceNum}
         </div>
-        <button className='roll-btn' onClick={rollDice}>Roll</button>
+        <button className='roll-btn' onClick={rollDice}>{tenzies? "New Game" : "Roll"}</button>
       </div>
     </div>
   );
